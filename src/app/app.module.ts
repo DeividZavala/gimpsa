@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { Store } from 'store';
 
 // feature modules
+import {GimpsaComponentsModule} from "./components/gimpsa-components.module";
 
 // containers
 import { AppComponent } from './containers/app/app.component';
@@ -12,12 +13,15 @@ import { AppComponent } from './containers/app/app.component';
 // components
 
 // routes
-export const ROUTES: Routes = [];
+export const ROUTES: Routes = [
+  {path: '', redirectTo: 'login', pathMatch: 'full' },
+];
 
 @NgModule({
   imports: [
     BrowserModule,
-    RouterModule.forRoot(ROUTES)
+    RouterModule.forRoot(ROUTES),
+    GimpsaComponentsModule
   ],
   declarations: [
     AppComponent
