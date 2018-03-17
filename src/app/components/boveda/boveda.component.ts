@@ -1,10 +1,13 @@
-import {AfterViewInit, Component, ElementRef, ViewChild} from "@angular/core";
+import {AfterViewInit, Component, ElementRef, ViewChild, LOCALE_ID} from "@angular/core";
 
 import * as Chart from 'chart.js';
+
+import {Lote} from "./entry.interface";
 
 @Component({
   selector: 'boveda-component',
   styleUrls: ['boveda.component.scss'],
+  providers:[{ provide: LOCALE_ID, useValue: "es" }],
   template: `
 
     <div class="uk-flex uk-flex-between">
@@ -33,12 +36,12 @@ import * as Chart from 'chart.js';
             <tbody>
             <tr>
               <td>Oro</td>
-              <td>12 kg</td>
+              <td>12 Kg</td>
               <td>{{28000 | currency:"MXN": true}}</td>
             </tr>
             <tr>
               <td>Plata</td>
-              <td>19 kg</td>
+              <td>19 Kg</td>
               <td>{{18000 | currency:"MXN": true}}</td>
             </tr>
             <tr>
@@ -52,49 +55,41 @@ import * as Chart from 'chart.js';
       </div>
     </div>
     
-    <section class="uk-section">
-      <table class="uk-table uk-table-divider">
-        <thead>
-        <tr>
-          <th>Lote</th>
-          <th>Precio de entrada</th>
-          <th>Material</th>
-          <th>Fecha Ingreso</th>
-          <th>Presentación</th>
-          <th>Estatus</th>
-          <th>Cantidad</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>0001</td>
-          <td>{{2345 | currency:"MXN":true}}</td>
-          <td>Table Data</td>
-          <td>Table Data</td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>0002</td>
-          <td>{{233445 | currency:"MXN":true}}</td>
-          <td>Table Data</td>
-          <td>Table Data</td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>0003</td>
-          <td>{{6345 | currency:"MXN":true}}</td>
-          <td>Table Data</td>
-          <td>Table Data</td>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        </tbody>
-      </table>
+    <section class="uk-section uk-section-small">
+      <div class="uk-card uk-card-default uk-card-body uk-padding-small">
+        <h3>Lotes en boveda</h3>
+        <div class="uk-margin-small-top">
+          
+        </div>
+        <table class="uk-table uk-table-divider uk-table-middle">
+          <thead>
+          <tr>
+            <th>Lote</th>
+            <th>Precio de entrada</th>
+            <th>Material</th>
+            <th>Fecha Ingreso</th>
+            <th>Presentación</th>
+            <th>Estatus</th>
+            <th>Cantidad</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let lote of lotes ">
+            <td>{{lote.id}}</td>
+            <td>{{lote.entry_price | currency:'MXN'}}</td>
+            <td>{{lote.material}}</td>
+            <td>{{lote.checkInDate | date: 'MMMM d, y'}}</td>
+            <td>{{lote.presentation}}</td>
+            <td class="uk-text-primary">{{lote.status ? lote.status : "En Proceso"}}</td>
+            <td>{{lote.quantity}} Kg</td>
+            <td><button class="uk-button uk-button-primary">Editar</button></td>
+          </tr>
+
+
+          </tbody>
+        </table>
+      </div>
     </section>
   
   `
@@ -129,6 +124,33 @@ export class BovedaComponent implements AfterViewInit{
       }
     }
   };
+
+  lotes: Lote[]= [
+    {
+      id: 1,
+      entry_price: 2349,
+      material: "Oro",
+      checkInDate: Date.now(),
+      presentation: "Barra",
+      quantity: 20,
+    },
+    {
+      id: 2,
+      entry_price: 2349,
+      material: "Plata",
+      checkInDate: Date.now(),
+      presentation: "Polvo",
+      quantity: 30,
+    },
+    {
+      id: 3,
+      entry_price: 23449,
+      material: "Oro",
+      checkInDate: Date.now(),
+      presentation: "Granalla",
+      quantity: 10,
+    }
+  ];
 
   @ViewChild('MaterialChart') chart: ElementRef;
 
