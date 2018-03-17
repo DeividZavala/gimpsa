@@ -1,0 +1,31 @@
+.btn-succes{
+  color: white;
+  background: #4AE81D;
+  border-color: #4AE81D;
+  font-weight: bold;
+}
+.uk-card-badge{
+  top: 20px;
+  right: 15px;
+}
+
+.label{
+  display: inline-block;
+  line-height: 1;
+  vertical-align: baseline;
+  margin: 0 .14285714em;
+  background-color: #e8e8e8;
+  background-image: none;
+  padding: .5833em .833em;
+  color: rgba(0,0,0,.6);
+  text-transform: none;
+  font-weight: 700;
+  border: 0 solid transparent;
+  border-radius: .28571429rem;
+  -webkit-transition: background .1s ease;
+  transition: background .1s ease;
+  cursor: pointer;
+  background-color: #767676!important;
+  border-color: #767676!important;
+  color: #fff!important;
+}

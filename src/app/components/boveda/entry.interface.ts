@@ -5,5 +5,6 @@ export interface Lote{
   checkInDate: number,
   quantity: number,
   presentation: string,
-  status?: string
+  status?: string,
+  service: string
 }

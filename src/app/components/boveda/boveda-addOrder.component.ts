@@ -10,7 +10,7 @@ import {Component} from "@angular/core";
 
     <!-- This is the modal with the default close button -->
     <div id="add-order" uk-modal>
-      <div class="uk-modal-dialog uk-modal-body">
+      <div class="uk-modal-dialog uk-modal-body uk-width-1-2">
         <button class="uk-modal-close-default" type="button" uk-close></button>
         <h2 class="uk-modal-title">Alta Ingreso</h2>
         <form >
