@@ -8,13 +8,14 @@ import { RouterModule, Routes } from "@angular/router";
 import {BovedaAddOrderComponent} from "./boveda/boveda-addOrder.component";
 import {ReactiveFormsModule} from "@angular/forms";
 import {AppService} from "./app.service";
+import {BovedaAddProcessComponent} from "./boveda/boveda-addProcess.component";
 
 const Routes: Routes = [
   {
     path: 'areas',
     children: [
       {path: 'boveda', component: BovedaComponent},
-      {path: 'lab', component: LaboratorioComponent}
+      {path: 'lab', component: LaboratorioComponent, children:[{path:'complete',children:[{path:':id', component: LaboratorioComponent}]}]}
     ]
   }
 ];
@@ -23,7 +24,8 @@ const Routes: Routes = [
   declarations: [
     LaboratorioComponent,
     BovedaComponent,
-    BovedaAddOrderComponent
+    BovedaAddOrderComponent,
+    BovedaAddProcessComponent
   ],
   imports: [
     CommonModule,

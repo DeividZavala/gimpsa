@@ -13,13 +13,19 @@ import {AppService} from "../app.service";
 
     <div class="uk-flex uk-flex-between">
       <h2>Bóveda</h2>
-      <boveda-addOrder 
-        [clientes]="clientes"
-        [materials]="materials"
-        [services]="services"
-        (addedLot)="addLot($event)"
-        (lotCreated)="addEvent($event)" >
-      </boveda-addOrder>
+
+      <div>
+        <boveda-addProcess></boveda-addProcess>
+
+        <boveda-addOrder
+          [clientes]="clientes"
+          [materials]="materials"
+          [services]="services"
+          (addedLot)="addLot($event)"
+          (lotCreated)="addEvent($event)" >
+        </boveda-addOrder>
+      </div>
+      
     </div>
     <div class="uk-child-width-1-2 uk-grid-small uk-grid-match" uk-grid>
       <div>
@@ -119,11 +125,11 @@ import {AppService} from "../app.service";
               </thead>
               <tbody>
               <tr *ngFor="let proceso of Procesos">
-                <td>{{proceso.id}}</td>
-                <td>0.{{proceso.muestra}} g</td>
+                <td>{{proceso.lote}}</td>
+                <td>0.{{proceso.initial_weigth}} g</td>
                 <td>{{proceso.material}}</td>
                 <td>{{proceso.area}}</td>
-                <td>{{proceso.type}}</td>
+                <td>{{proceso.process}}</td>
                 <td><button class="uk-button uk-button-primary">Editar</button></td>
               </tr>
               
@@ -214,10 +220,7 @@ export class BovedaComponent implements AfterViewInit, OnInit{
     {"name": "Ruben Castillo", "id":2}
   ];
 
-  materials = [
-    {"name": "Oro", "id": 1},
-    {"name": "Plata", "id": 2}
-  ];
+  materials: any[];
 
   services = [
     {"name": "Analisis", "id":1},
@@ -229,35 +232,7 @@ export class BovedaComponent implements AfterViewInit, OnInit{
     {user: "Maria", "type": "creo", target:"1", target_type:"Lote"}
   ];
 
-  lotes: Lote[]= [
-    {
-      id: 1,
-      entry_price: 2349,
-      material: "Oro",
-      checkInDate: Date.now(),
-      presentation: "Barra",
-      quantity: 20,
-      service: "Analisis"
-    },
-    {
-      id: 2,
-      entry_price: 2349,
-      material: "Plata",
-      checkInDate: Date.now(),
-      presentation: "Polvo",
-      quantity: 30,
-      service: "Fundición"
-    },
-    {
-      id: 3,
-      entry_price: 23449,
-      material: "Oro",
-      checkInDate: Date.now(),
-      presentation: "Granalla",
-      quantity: 10,
-      service: "Analisis"
-    }
-  ];
+  lotes: any[];
 
   @ViewChild('MaterialChart') chart: ElementRef;
 
@@ -267,6 +242,8 @@ export class BovedaComponent implements AfterViewInit, OnInit{
 
   ngOnInit(){
     this.Procesos = this.as.getProcesses();
+    this.lotes = this.as.getBatches();
+    this.materials = this.as.getMaterials();
   }
 
   addLot(lote: Lote){

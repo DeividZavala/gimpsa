@@ -8,7 +8,7 @@ import * as UIkit from 'uikit';
   template: `
 
     
-    <button class="uk-button uk-button-default uk-margin-small-right btn-succes" type="button" uk-toggle="target: #add-order">Agregar</button>
+    <button class="uk-button uk-button-default uk-margin-small-right btn-succes" type="button" uk-toggle="target: #add-order">Crear lote</button>
 
     <!-- This is the modal with the default close button -->
     <div id="add-order" uk-modal>
@@ -64,7 +64,6 @@ import * as UIkit from 'uikit';
                 <select class="uk-select" id="form-stacked-select" formControlName="material">
                   <option value="" selected>Material</option>
                   <option *ngFor="let material of materials" [value]="material.name">{{material.name}}</option>
-                  <option>Plata</option>
                 </select>
               </div>
             </div>
