@@ -1,4 +1,5 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
+import {AppService} from "../app.service";
 
 @Component({
   selector: 'lab-component',
@@ -11,7 +12,7 @@ import {Component} from "@angular/core";
       <h3 class="uk-card-title uk-margin-remove-top">Procesos pendientes</h3>
       <div class="uk-child-width-1-3 uk-grid-small uk-grid-match" uk-grid>
 
-        <div>
+        <div *ngFor="let proceso of procesos">
           <div class="uk-card uk-card-default uk-animation-scale-up">
 
             <div class="uk-card-header uk-padding-small">
@@ -70,6 +71,20 @@ import {Component} from "@angular/core";
     
   `
 })
-export class LaboratorioComponent{
+export class LaboratorioComponent implements OnInit{
+
+  procesos: any[];
+
+  constructor(
+    private as: AppService
+  ){}
+
+  getProcesors(){
+    this.procesos = this.as.getProcesses();
+  }
+
+  ngOnInit(){
+    this.getProcesors();
+  }
 
 }

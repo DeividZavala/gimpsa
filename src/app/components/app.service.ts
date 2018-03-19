@@ -5,11 +5,22 @@ import {Injectable} from "@angular/core";
 export class AppService{
 
 
-  analisis = [
-    {}
+  Procesos: any[] = [
+    {
+      id: 1,
+      muestra: 234,
+      material: "Oro",
+      area: "Laboratorio",
+      type: "Analisis"
+    }
   ];
 
-  constructor(){
-
+  getProcesses(){
+    return this.Procesos;
   }
+
+  addProcess(process: any){
+    this.Procesos.push(process)
+  }
+
 }

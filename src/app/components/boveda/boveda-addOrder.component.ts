@@ -123,6 +123,9 @@ export class BovedaAddOrderComponent{
   @Output()
   addedLot = new EventEmitter<any>();
 
+  @Output()
+  lotCreated = new EventEmitter<any>();
+
   constructor(
     private fb: FormBuilder
   ){}
@@ -132,7 +135,7 @@ export class BovedaAddOrderComponent{
     entry_price: null,
     material: null,
     checkInDate: null,
-    quantity: 0,
+    quantity: null,
     presentation: '',
     service: ''
   });
@@ -140,15 +143,14 @@ export class BovedaAddOrderComponent{
   onAdded(){
     this.form.value.checkInDate = Date.parse(this.form.value.checkInDate);
     this.addedLot.emit(this.form.value);
+    this.lotCreated.emit({user: "David", "type": "creo", target:this.form.value.id, target_type:"Lote"});
     UIkit.modal('#add-order').hide();
     this.form.reset({
       id: null,
       entry_price: null,
-      material: null
-
-      ,
+      material: null,
       checkInDate: null,
-      quantity: 0,
+      quantity: null,
       presentation: null,
       service: null
     });

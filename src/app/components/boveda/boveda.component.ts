@@ -1,8 +1,9 @@
-import {AfterViewInit, Component, ElementRef, ViewChild, LOCALE_ID} from "@angular/core";
+import {AfterViewInit, Component, ElementRef, ViewChild, LOCALE_ID, OnInit} from "@angular/core";
 
 import * as Chart from 'chart.js';
 
 import {Lote} from "./entry.interface";
+import {AppService} from "../app.service";
 
 @Component({
   selector: 'boveda-component',
@@ -16,7 +17,8 @@ import {Lote} from "./entry.interface";
         [clientes]="clientes"
         [materials]="materials"
         [services]="services"
-        (addedLot)="addLot($event)">
+        (addedLot)="addLot($event)"
+        (lotCreated)="addEvent($event)" >
       </boveda-addOrder>
     </div>
     <div class="uk-child-width-1-2 uk-grid-small uk-grid-match" uk-grid>
@@ -165,7 +167,11 @@ import {Lote} from "./entry.interface";
   
   `
 })
-export class BovedaComponent implements AfterViewInit{
+export class BovedaComponent implements AfterViewInit, OnInit{
+
+  constructor(
+    private as: AppService
+  ){}
 
   chartConfig: any = {
     scaleSteps: 5,
@@ -201,13 +207,7 @@ export class BovedaComponent implements AfterViewInit{
     }
   };
 
-  Procesos = [{
-    id: 1,
-    muestra: 234,
-    material: "Oro",
-    area: "Laboratorio",
-    type: "Analisis"
-  }];
+  Procesos: any[];
 
   clientes= [
     {"name": "Juan Lopez", "id":1},
@@ -265,8 +265,16 @@ export class BovedaComponent implements AfterViewInit{
     new Chart(this.chart.nativeElement, this.chartConfig);
   }
 
+  ngOnInit(){
+    this.Procesos = this.as.getProcesses();
+  }
+
   addLot(lote: Lote){
     this.lotes.push(lote);
   }
+  addEvent(event: any){
+    this.actions.push(event);
+  }
+
 
 }

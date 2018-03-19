@@ -7,6 +7,7 @@ import {BovedaComponent} from "./boveda/boveda.component";
 import { RouterModule, Routes } from "@angular/router";
 import {BovedaAddOrderComponent} from "./boveda/boveda-addOrder.component";
 import {ReactiveFormsModule} from "@angular/forms";
+import {AppService} from "./app.service";
 
 const Routes: Routes = [
   {
@@ -28,6 +29,9 @@ const Routes: Routes = [
     CommonModule,
     ReactiveFormsModule,
     RouterModule.forChild(Routes)
+  ],
+  providers: [
+    AppService
   ],
   exports: []
 })
