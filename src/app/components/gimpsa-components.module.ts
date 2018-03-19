@@ -6,6 +6,7 @@ import {LaboratorioComponent} from "./laboratorio/laboratorio.component";
 import {BovedaComponent} from "./boveda/boveda.component";
 import { RouterModule, Routes } from "@angular/router";
 import {BovedaAddOrderComponent} from "./boveda/boveda-addOrder.component";
+import {ReactiveFormsModule} from "@angular/forms";
 
 const Routes: Routes = [
   {
@@ -25,6 +26,7 @@ const Routes: Routes = [
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     RouterModule.forChild(Routes)
   ],
   exports: []

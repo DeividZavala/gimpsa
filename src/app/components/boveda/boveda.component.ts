@@ -12,7 +12,12 @@ import {Lote} from "./entry.interface";
 
     <div class="uk-flex uk-flex-between">
       <h2>Bóveda</h2>
-      <boveda-addOrder></boveda-addOrder>
+      <boveda-addOrder 
+        [clientes]="clientes"
+        [materials]="materials"
+        [services]="services"
+        (addedLot)="addLot($event)">
+      </boveda-addOrder>
     </div>
     <div class="uk-child-width-1-2 uk-grid-small uk-grid-match" uk-grid>
       <div>
@@ -204,6 +209,21 @@ export class BovedaComponent implements AfterViewInit{
     type: "Analisis"
   }];
 
+  clientes= [
+    {"name": "Juan Lopez", "id":1},
+    {"name": "Ruben Castillo", "id":2}
+  ];
+
+  materials = [
+    {"name": "Oro", "id": 1},
+    {"name": "Plata", "id": 2}
+  ];
+
+  services = [
+    {"name": "Analisis", "id":1},
+    {"name": "Fundicion", "id":2},
+  ];
+
   actions = [
     {user:"Juan", type: "edito", target:"A123", target_type: "Analisis"},
     {user: "Maria", "type": "creo", target:"1", target_type:"Lote"}
@@ -243,6 +263,10 @@ export class BovedaComponent implements AfterViewInit{
 
   ngAfterViewInit(){
     new Chart(this.chart.nativeElement, this.chartConfig);
+  }
+
+  addLot(lote: Lote){
+    this.lotes.push(lote);
   }
 
 }
