@@ -13,13 +13,14 @@ import {AppService} from "../app.service";
       <div class="uk-child-width-1-3 uk-grid-small uk-grid-match" uk-grid>
 
         <div *ngFor="let proceso of procesos">
+          
           <div class="uk-card uk-card-default uk-animation-scale-up">
 
             <div class="uk-card-header uk-padding-small">
-              <div class="uk-card-badge uk-label">Analisis</div>
+              <div class="uk-card-badge uk-label">{{proceso.process}}</div>
               <div class="uk-grid-small uk-flex-middle uk-width-3-4" uk-grid>
                 <div>
-                  <h3 class="uk-margin-remove-bottom">Granalla Ag P/Nitrato Maquila</h3>
+                  <h3 class="uk-margin-remove-bottom">{{proceso.material}}</h3>
                   <p class="uk-text-meta uk-margin-remove-top">Material</p>
                 </div>
                 
@@ -30,7 +31,7 @@ import {AppService} from "../app.service";
               <div class="uk-grid-small uk-child-width-1-2" uk-grid>
                 
                 <div>
-                  <h4 class="uk-margin-remove-bottom">0.234 g</h4>
+                  <h4 class="uk-margin-remove-bottom">0.{{proceso.initial_weigth}} g</h4>
                   <p class="uk-text-meta uk-margin-remove-top">Peso Muestra</p>
                 </div>
                 
@@ -40,7 +41,7 @@ import {AppService} from "../app.service";
                 </div>
 
                 <div>
-                  <h4 class=" uk-margin-remove-bottom">0021</h4>
+                  <h4 class=" uk-margin-remove-bottom">{{proceso.lote}}</h4>
                   <p class="uk-text-meta uk-margin-remove-top">Lote</p>
                 </div>
 
@@ -51,9 +52,7 @@ import {AppService} from "../app.service";
                 
                 <div class="uk-width-1-1">
                   <h6>Elementos a analizar</h6>
-                  <span class="label">Ag</span>
-                  <span class="label">Au</span>
-                  <span class="label">Pt</span>
+                  <span class="label" *ngFor="let el of proceso.elements" >{{el.symbol}}</span>
                 </div>
                 
               </div>

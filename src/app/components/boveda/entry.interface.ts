@@ -7,4 +7,6 @@ export interface Lote{
   presentation: string,
   status?: string,
   service: string
+  client: number,
+  description: string
 }

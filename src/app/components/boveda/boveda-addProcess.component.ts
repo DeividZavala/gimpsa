@@ -1,6 +1,7 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, Output, EventEmitter} from "@angular/core";
 import {FormBuilder} from "@angular/forms";
 import {AppService} from "../app.service";
+import * as UIkit from 'uikit';
 
 interface Element {
   [key: string]: any
@@ -103,6 +104,9 @@ interface Element {
 })
 export class BovedaAddProcessComponent implements OnInit{
 
+  @Output()
+  ProcessCreated = new EventEmitter<any>();
+
   constructor(
     private fb: FormBuilder,
     private as: AppService
@@ -163,7 +167,19 @@ export class BovedaAddProcessComponent implements OnInit{
     });
     console.log(formValue);
 
+    this.ProcessCreated.emit({user: "David", "type": "creo", target:this.form.value.lote, target_type:"Proceso"});
+
     this.as.addProcess(formValue);
+
+    UIkit.modal('#add-process').hide();
+    this.form.reset({
+      lote: null,
+      initial_weigth: null,
+      material: null,
+      area: '',
+      process: null,
+      elements: this.buildElements()
+    });
 
   }
 

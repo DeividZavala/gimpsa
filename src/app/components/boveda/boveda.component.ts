@@ -15,7 +15,9 @@ import {AppService} from "../app.service";
       <h2>Bóveda</h2>
 
       <div>
-        <boveda-addProcess></boveda-addProcess>
+        <boveda-addProcess
+          (ProcessCreated)="addEvent($event)">
+        </boveda-addProcess>
 
         <boveda-addOrder
           [clientes]="clientes"

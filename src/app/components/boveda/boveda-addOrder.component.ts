@@ -50,10 +50,10 @@ import * as UIkit from 'uikit';
             <div class="">
               <label class="uk-form-label" for="form-stacked-select">Cliente</label>
               <div class="uk-form-controls">
-                <select class="uk-select" id="form-stacked-select">
+                <select class="uk-select" id="form-stacked-select" formControlName="client">
                   <option value="" selected>Cliente</option>
-                  <option value="">Juan Lopez</option>
-                  <option value="">Ramon Castillo</option>
+                  <option [value]="client.id" *ngFor="let client of clientes">{{client.name}}</option>
+                  
                 </select>
               </div>
             </div>
@@ -88,7 +88,7 @@ import * as UIkit from 'uikit';
             <div class="uk-width-1-1">
               <label class="uk-form-label" for="entry-presentation">Descripción</label>
               <div class="uk-form-controls">
-                <textarea class="uk-textarea" rows="5" placeholder=""></textarea>
+                <textarea class="uk-textarea" rows="5" placeholder="" formControlName="description"></textarea>
               </div>
             </div>
 
@@ -135,8 +135,10 @@ export class BovedaAddOrderComponent{
     material: null,
     checkInDate: null,
     quantity: null,
-    presentation: '',
-    service: ''
+    presentation: null,
+    service: null,
+    client: null,
+    description: null
   });
 
   onAdded(){
@@ -151,7 +153,9 @@ export class BovedaAddOrderComponent{
       checkInDate: null,
       quantity: null,
       presentation: null,
-      service: null
+      service: null,
+      client: null,
+      description: null
     });
   }
 

@@ -27,7 +27,9 @@ export class AppService{
       checkInDate: Date.now(),
       presentation: "Barra",
       quantity: 20,
-      service: "Analisis"
+      service: "Analisis",
+      client: 1,
+      description: "Barra Metalica de oro"
     },
     {
       id: 2,
@@ -36,7 +38,9 @@ export class AppService{
       checkInDate: Date.now(),
       presentation: "Polvo",
       quantity: 30,
-      service: "Fundición"
+      service: "Fundición",
+      client: 2,
+      description: "Barra Metalica de oro"
     },
     {
       id: 3,
@@ -45,7 +49,9 @@ export class AppService{
       checkInDate: Date.now(),
       presentation: "Granalla",
       quantity: 10,
-      service: "Analisis"
+      service: "Analisis",
+      client: 1,
+      description: "Granalla de plata"
     }
   ];
 
