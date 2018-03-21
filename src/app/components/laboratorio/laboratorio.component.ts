@@ -12,7 +12,9 @@ import {AppService} from "../app.service";
       <h3 class="uk-card-title uk-margin-remove-top">Procesos pendientes</h3>
       <div class="uk-child-width-1-3 uk-grid-small uk-grid-match" uk-grid>
 
-        <div *ngFor="let proceso of procesos">
+        <div *ngFor="let proceso of procesos; let i = index;">
+          
+          <pre>{{proceso | json}}</pre>
           
           <div class="uk-card uk-card-default uk-animation-scale-up">
 
@@ -52,13 +54,13 @@ import {AppService} from "../app.service";
                 
                 <div class="uk-width-1-1">
                   <h6>Elementos a analizar</h6>
-                  <span class="label" *ngFor="let el of proceso.elements" >{{el.symbol}}</span>
+                  <span class="label" *ngFor="let el of proceso.elements">{{el.symbol}}</span>
                 </div>
                 
               </div>
             </div>
             <div class="uk-card-footer uk-flex uk-flex-between uk-flex-middle uk-padding-small">
-              <a href="#" class="uk-button uk-button-text">Completar</a>
+              <a [routerLink]="['/areas/lab', i]" class="uk-button uk-button-text" >Completar</a>
               <a href="" class="uk-button uk-button-default uk-margin-small-right btn-succes">Finalizar</a>
             </div>
             
@@ -78,12 +80,13 @@ export class LaboratorioComponent implements OnInit{
     private as: AppService
   ){}
 
-  getProcesors(){
-    this.procesos = this.as.getProcesses();
+  getProcesses(){
+    this.as.getProcesses().subscribe(processes => this.procesos = processes);
   }
 
   ngOnInit(){
-    this.getProcesors();
+    this.getProcesses();
+    this.getProcesses();
   }
 
 }

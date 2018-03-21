@@ -15,8 +15,7 @@ import {AppService} from "../app.service";
       <h2>Bóveda</h2>
 
       <div>
-        <boveda-addProcess
-          (ProcessCreated)="addEvent($event)">
+        <boveda-addProcess>
         </boveda-addProcess>
 
         <boveda-addOrder
@@ -229,10 +228,7 @@ export class BovedaComponent implements AfterViewInit, OnInit{
     {"name": "Fundicion", "id":2},
   ];
 
-  actions = [
-    {user:"Juan", type: "edito", target:"A123", target_type: "Analisis"},
-    {user: "Maria", "type": "creo", target:"1", target_type:"Lote"}
-  ];
+  actions: any;
 
   lotes: any[];
 
@@ -243,16 +239,25 @@ export class BovedaComponent implements AfterViewInit, OnInit{
   }
 
   ngOnInit(){
-    this.Procesos = this.as.getProcesses();
+    this.getProcesses();
     this.lotes = this.as.getBatches();
     this.materials = this.as.getMaterials();
+    this.getActions();
   }
 
   addLot(lote: Lote){
     this.lotes.push(lote);
   }
   addEvent(event: any){
-    this.actions.push(event);
+    this.as.actions.push(event);
+  }
+
+  getProcesses(){
+    this.as.getProcesses().subscribe(processes => this.Procesos = processes);
+  }
+
+  getActions(){
+    this.as.getActions().subscribe(actions=> this.actions = actions)
   }
 
 

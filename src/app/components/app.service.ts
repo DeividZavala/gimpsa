@@ -1,20 +1,23 @@
 import {Injectable} from "@angular/core";
 import {Lote} from "./boveda/entry.interface";
+import {Observable} from "rxjs/Observable";
+import { of } from 'rxjs/observable/of';
+
 
 
 @Injectable()
 export class AppService{
 
 
-  Procesos: any[] = [
+  Procesos = [
     {
       lote: 1,
       initial_weigth: 234,
       material: "Oro",
       area: "Laboratorio",
-      process: "Analisis",
+      process: "Copelacion",
       elements:[
-        {symbol: "Ag"}
+        {symbol: "Ag", selected: true}
       ]
     }
   ];
@@ -60,7 +63,7 @@ export class AppService{
       name: "Laboratorio",
       id:1,
       processes: [
-        "Analisis"
+        "Copelacion"
       ]
     },
     {
@@ -77,8 +80,25 @@ export class AppService{
     {"name": "Plata", "id": 2}
   ];
 
-  getProcesses(){
-    return this.Procesos;
+  actions = [
+    {user:"Juan", type: "edito", target:"A123", target_type: "Analisis"},
+    {user: "Maria", "type": "creo", target:"1", target_type:"Lote"}
+  ];
+
+  getActions():Observable<any>{
+    return of(this.actions);
+  }
+
+  addActions(action: any){
+    this.actions.push(action);
+  }
+
+  getProcesses():Observable<any>{
+    return of(this.Procesos);
+  }
+
+  getDetail(id: number){
+    return this.Procesos[id];
   }
 
   getAreas(){
@@ -94,7 +114,9 @@ export class AppService{
   }
 
   addProcess(process: any){
-    this.Procesos.push(process)
+    this.Procesos.push(process);
+    console.log("Proceso agregado", process);
   }
+
 
 }
