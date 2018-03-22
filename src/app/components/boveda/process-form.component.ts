@@ -1,6 +1,9 @@
 import {Component, OnInit, Input, Output, EventEmitter} from "@angular/core";
-import {FormBuilder} from "@angular/forms";
+import {FormArray, FormBuilder} from "@angular/forms";
 import {AppService} from "../app.service";
+
+import * as UIkit from 'uikit';
+import {Router} from "@angular/router";
 
 interface Element {
   [key: string]: any
@@ -74,17 +77,18 @@ interface Element {
             </select>
           </div>
         </div>
-
-
+        
         <div>
 
           <label class="uk-form-label" >Elementos a analizar</label>
           <div class="uk-form-controls uk-responsive-height">
             <div class="uk-grid-small uk-child-width-auto uk-grid uk-flex-middle uk-height-1-1">
-              <label *ngFor="let elem of elemntList.controls; let i=index"><input class="uk-checkbox" [formControl]=elem type="checkbox"> {{Elements[i].symbol}}</label>
+              <label *ngFor="let elem of Elements; let i=index">
+                <input class="uk-checkbox" type="checkbox" (change)="addElement(elem)"> {{elem.symbol}}
+              </label>
             </div>
           </div>
-
+          
         </div>
 
       </div>
@@ -92,10 +96,12 @@ interface Element {
       <button
         class="uk-button btn-succes uk-button-default uk-margin-small uk-float-right"
         type="button"
-        (click)="onEdit(form.value)"
+        (click)="onEdit(id)"
         *ngIf="process">
         Editar proceso
       </button>
+      
+      <pre>{{form.value | json }}</pre>
 
       <button
         class="uk-button btn-succes uk-button-default uk-margin-small uk-float-right"
@@ -117,9 +123,13 @@ export class ProcessFormComponent implements OnInit{
   @Input()
   process?: any;
 
+  @Input()
+  id?: number;
+
   constructor(
     private fb: FormBuilder,
-    private as: AppService
+    private as: AppService,
+    private router: Router
   ){}
 
   Batches: any[];
@@ -138,9 +148,9 @@ export class ProcessFormComponent implements OnInit{
   }
 
   Elements: Element[] = [
-    {name: "Platino",id:1,symbol: 'Pt', selected: false},
-    {name: "Plata",id:2,symbol: 'Ag', selected: false},
-    {name: "Oro",id:3,symbol: 'Au', selected: false}
+    {name: "Platino",id:1,symbol: 'Pt'},
+    {name: "Plata",id:2,symbol: 'Ag'},
+    {name: "Oro",id:3,symbol: 'Au'}
   ];
 
   form = this.fb.group({
@@ -149,14 +159,14 @@ export class ProcessFormComponent implements OnInit{
     material: null,
     area: null,
     process: null,
-    elements: this.buildElements(),
+    elements: this.fb.array([]),
     id: null,
     final_weigth: null,
     law: null
   });
 
-  buildElements(){
-    const arr = this.Elements.map(e => {
+  buildElements(array: any){
+    const arr = array.map((e: any) => {
       return this.fb.control(e.selected);
     });
     return this.fb.array(arr);
@@ -165,6 +175,26 @@ export class ProcessFormComponent implements OnInit{
   get elemntList() {
     return this.form.get('elements');
   };
+
+  createElement(element: any){
+    return this.fb.group({
+      symbol: element.symbol,
+      name: element.name
+    })
+  }
+
+  addElement(element: any){
+    const control = this.form.get("elements") as FormArray;
+    if(
+      !(control.value.some((e : any) => e.symbol === element.symbol))
+    ){
+      control.push(this.createElement(element));
+    }else{
+      let index = control.value.findIndex((x:any) => x.symbol === element.symbol);
+      control.removeAt(index);
+    }
+
+  }
 
   getLot(lot: string){
     this.form.patchValue({"lote": parseInt(lot)});
@@ -195,6 +225,16 @@ export class ProcessFormComponent implements OnInit{
 
   }
 
+  onEdit(id: number){
+    this.form.patchValue({id});
+    this.as.updateProcess(this.form.value);
+    UIkit.notification({
+      message: "Actualizado con éxito",
+      status: 'success'
+    });
+    this.router.navigate(['/areas/boveda']);
+  }
+
   onAdded(form: any){
 
 
@@ -214,7 +254,7 @@ export class ProcessFormComponent implements OnInit{
       material: null,
       area: null,
       process: null,
-      elements: this.buildElements(),
+      elements: this.fb.array([]),
       id: null,
       final_weigth: null,
       law: null

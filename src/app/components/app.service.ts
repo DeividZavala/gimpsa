@@ -22,7 +22,7 @@ export class AppService{
     }
   ];
 
-  Lotes: Lote[]= [
+  Lotes: Lote[] = [
     {
       id: 1,
       entry_price: 2349,
@@ -118,5 +118,12 @@ export class AppService{
     console.log("Proceso agregado", process);
   }
 
+  updateProcess(process: any ){
+
+    if(process.id !== -1){
+      this.Procesos[process.id] = process;
+    }
+
+  }
 
 }

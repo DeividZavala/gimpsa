@@ -14,8 +14,6 @@ import {AppService} from "../app.service";
 
         <div *ngFor="let proceso of procesos; let i = index;">
           
-          <pre>{{proceso | json}}</pre>
-          
           <div class="uk-card uk-card-default uk-animation-scale-up">
 
             <div class="uk-card-header uk-padding-small">

@@ -9,10 +9,11 @@ import {ActivatedRoute} from "@angular/router";
     <h1>Completar Analisis</h1>
     
     <div uk-grid>
+      
       <div>
-        <process-form [process]="process"></process-form>
+        <process-form [process]="process" [id]="id"></process-form>
       </div>
-      <div></div>
+      
     </div>
   
   `
