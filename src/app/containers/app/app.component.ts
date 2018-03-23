@@ -5,11 +5,11 @@ import * as uikit from 'uikit';
   styleUrls: ['app.component.scss'],
   template: `
     <div class="app">
-      <header class="uk-padding-small">
-        <img class="uk-height-1-1" src="img/logo.png">
+      <header class="uk-padding-small noprint">
+        <img class="uk-height-1-1 noprint" src="img/logo.png">
       </header>
-      <div class="app__content">
-        <nav>
+      <div class="app__content noprint">
+        <nav class="noprint">
           <a
             routerLink="/areas/boveda"
             routerLinkActive="active">

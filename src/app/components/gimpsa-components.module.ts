@@ -11,8 +11,13 @@ import {AppService} from "./app.service";
 import {BovedaAddProcessComponent} from "./boveda/boveda-addProcess.component";
 import {ProcessFormComponent} from "./boveda/process-form.component";
 import {ProcessCompleteComponent} from "./laboratorio/process-complete.component";
+import {CertificateComponent} from "./certificado/certificate.component";
 
 const Routes: Routes = [
+  {
+    path: "certificate",
+    component: CertificateComponent
+  },
   {
     path: 'areas',
     children: [
@@ -44,7 +49,8 @@ const Routes: Routes = [
     BovedaComponent,
     BovedaAddOrderComponent,
     BovedaAddProcessComponent,
-    ProcessFormComponent
+    ProcessFormComponent,
+    CertificateComponent
   ],
   imports: [
     CommonModule,

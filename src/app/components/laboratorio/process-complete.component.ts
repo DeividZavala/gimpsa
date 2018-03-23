@@ -6,7 +6,13 @@ import {ActivatedRoute} from "@angular/router";
   selector: 'process-complete',
   template: `
   
-    <h1>Completar Analisis</h1>
+    <div class="uk-flex uk-flex-between">
+      <h1>Completar Analisis</h1>
+
+      <div>
+        <a routerLink="/certificate" class="uk-button uk-button-primary">Imprimir Certificado</a>
+      </div>
+    </div>
     
     <div uk-grid>
       
