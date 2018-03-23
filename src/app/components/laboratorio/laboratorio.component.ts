@@ -10,7 +10,7 @@ import {AppService} from "../app.service";
 
     <section class="uk-section uk-section-xsmall">
       <h3 class="uk-card-title uk-margin-remove-top">Procesos pendientes</h3>
-      <div class="uk-child-width-1-3 uk-grid-small uk-grid-match" uk-grid>
+      <div class="uk-child-width-1-3@m uk-child-width-1-1@s uk-grid-small uk-grid-match" uk-grid>
 
         <div *ngFor="let proceso of procesos; let i = index;">
           

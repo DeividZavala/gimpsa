@@ -84,7 +84,7 @@ interface Element {
           <div class="uk-form-controls uk-responsive-height">
             <div class="uk-grid-small uk-child-width-auto uk-grid uk-flex-middle uk-height-1-1">
               <label *ngFor="let elem of Elements; let i=index">
-                <input class="uk-checkbox" type="checkbox" (change)="addElement(elem)"> {{elem.symbol}}
+                <input class="uk-checkbox" type="checkbox" (change)="addElement(elem)" [checked]="ifChecked(elem.symbol)" > {{elem.symbol}}
               </label>
             </div>
           </div>
@@ -100,8 +100,6 @@ interface Element {
         *ngIf="process">
         Editar proceso
       </button>
-      
-      <pre>{{form.value | json }}</pre>
 
       <button
         class="uk-button btn-succes uk-button-default uk-margin-small uk-float-right"
@@ -142,9 +140,22 @@ export class ProcessFormComponent implements OnInit{
     this.Areas = this.as.getAreas();
     this.Materials = this.as.getMaterials();
     if(this.process) {
-      this.form.patchValue(this.process);
+      this.setProcess(this.process);
       this.onAreaChange(this.process.area);
     }
+  }
+
+  ifChecked(symbol: string){
+    if(this.process) return this.process.elements.some( (e:any) => e.symbol === symbol);
+    return false;
+  }
+
+  setProcess(process: any){
+    const control = this.form.get("elements") as FormArray;
+    this.form.patchValue(process);
+    process.elements.map( (element:any) => {
+      control.push(this.createElement(element));
+    })
   }
 
   Elements: Element[] = [
@@ -164,17 +175,6 @@ export class ProcessFormComponent implements OnInit{
     final_weigth: null,
     law: null
   });
-
-  buildElements(array: any){
-    const arr = array.map((e: any) => {
-      return this.fb.control(e.selected);
-    });
-    return this.fb.array(arr);
-  }
-
-  get elemntList() {
-    return this.form.get('elements');
-  };
 
   createElement(element: any){
     return this.fb.group({
@@ -209,22 +209,6 @@ export class ProcessFormComponent implements OnInit{
     this.form.patchValue({law});
   }
 
-  getSelectedElements(array: any){
-
-    let ele;
-
-    let elements = array.map((selected: boolean, i: number)=>{
-      return {
-        symbol: this.Elements[i].symbol,
-        selected
-      }
-    });
-    ele = elements.filter((element: any) => element.selected === true);
-
-    return ele;
-
-  }
-
   onEdit(id: number){
     this.form.patchValue({id});
     this.as.updateProcess(this.form.value);
@@ -237,14 +221,9 @@ export class ProcessFormComponent implements OnInit{
 
   onAdded(form: any){
 
-
-    const formValue = Object.assign({}, form, {
-      elements: this.getSelectedElements(form.elements)
-    });
-
     this.as.addActions({user: "David", "type": "creo", target:this.form.value.lote, target_type:"Proceso"});
 
-    this.as.addProcess(formValue);
+    this.as.addProcess(form);
 
     this.processCreated.emit();
 
